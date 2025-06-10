@@ -87,7 +87,11 @@ export default async function handler(req, res) {
     if (mods && mods.length > 0) {
       finalMessage += ` +${mods.join(", ")}`;
     }
-    await client.getSelf().sendMessage(finalMessage);
+
+    const starRating = Math.round(beatmap.difficultyrating * 10) / 10;
+    finalMessage += ` ${starRating}★ | BPM: ${beatmap.bpm}`;
+
+    await client.getSelf().sendMessage(`@${username} : ${finalMessage}`);
 
     client.disconnect();
 
