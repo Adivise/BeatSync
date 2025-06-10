@@ -35,14 +35,7 @@ export default async function handler(req, res) {
         }
       }
 
-      const newRequest = await Map.create({
-        username,
-        mods: mods || [],
-        map,
-        createdAt: new Date(),
-      });
-
-      return res.status(201).json({ success: true, id: newRequest._id });
+      return res.status(201).json({ success: true });
     } catch (err) {
       console.error('Database error:', err);
       return res.status(500).json({ error: 'Database error', details: err.message });

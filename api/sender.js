@@ -91,19 +91,19 @@ export default async function handler(req, res) {
 
     client.disconnect();
 
-    // Upsert map info in the database
-    await Map.updateOne(
-      { beatmapId: beatmap.beatmap_id },
-      { mapInfo: [beatmap], username, mods },
-      { upsert: true }
-    );
-    const updatedMap = await Map.findOne({ beatmapId: beatmap.beatmap_id });
+    const createdMap = await Map.create({
+      beatmapId: beatmap.beatmap_id,
+      mapInfo: [beatmap],
+      username,
+      mods,
+      createdAt: new Date(),
+    });
 
     return res.status(200).json({
       success: true,
       message: finalMessage,
       mapInfo: beatmap,
-      id: updatedMap ? updatedMap._id : undefined,
+      id: createdMap ? createdMap._id : undefined,
     });
   } catch (err) {
     console.error("Error in Sender handler:", err, req.body);
