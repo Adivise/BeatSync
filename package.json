@@ -1,13 +1,12 @@
 {
-  "name": "suntury",
+  "name": "beatsync",
   "author": {
     "name": "Adivise"
   },
   "type": "module",
-  "description": "Suntury - A full-stack application for osu! requests",
-  "version": "2.0.0b",
+  "description": "BeatSync - A full-stack application for osu! requests",
+  "version": "2.6.0",
   "scripts": {
-    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "vercel-build": "npm run build"
   },
@@ -17,7 +16,7 @@
     "bancho.js": "^0.12.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mongoose": "^8.15.0",
     "node-fetch": "^3.3.2",
