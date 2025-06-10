@@ -80,9 +80,11 @@ All backend/frontend configuration is handled through Vercel environment variabl
 
 We welcome contributions! Please feel free to submit a Pull Request.
 
-<div align="center">
-  <img src="https://contributors-img.web.app/image?repo=Adivise/BeatSync" />
-</div>
+<p align="center">
+  <a href="https://github.com/Adivise/BeatSync/graphs/contributors">
+    <img src="https://contributors-img.web.app/image?repo=Adivise/BeatSync" alt="Project Contributors"/>
+  </a>
+</p>
 
 ## 🙏 Credits
 
