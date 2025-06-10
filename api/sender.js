@@ -34,9 +34,9 @@ export default async function handler(req, res) {
 		};
 
     let matchedRegex = null;
-    for (const [key, value] of Object.entries(regex)) {
-      if (value.test(map)) {
-        matchedRegex = key;
+    for (const key in regex) {
+      if (regex[key].test(map)) {
+        matchedRegex = regex[key];
         break;
       }
     }
