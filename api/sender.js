@@ -24,7 +24,7 @@ const MAP_LINK_REGEX = {
  * @returns {string} The extracted beatmap ID
  * @throws {Error} If the map link is invalid
  */
-function validateAndExtractBeatmapId(mapLink) {
+function validateAndExtractBeatmapId(mapLink, req, res) {
   const trimmedLink = mapLink.trim();
   let matchedRegex = null;
   
@@ -36,7 +36,7 @@ function validateAndExtractBeatmapId(mapLink) {
   }
 
   if (!matchedRegex) {
-    throw new Error("Invalid map link. Please use a valid osu! map link.");
+    return res.status(400).json({ error: "Invalid map link. Please use a valid osu! map link." });
   }
 
   const match = trimmedLink.match(matchedRegex);
@@ -51,7 +51,7 @@ function validateAndExtractBeatmapId(mapLink) {
   } else if (matchedRegex === MAP_LINK_REGEX.beatmap_alternate) {
     return match[1];
   } else {
-    throw new Error("Please provide a direct beatmap link, not a beatmapset link.");
+    return res.status(400).json({ error: "Please provide a direct beatmap link, not a beatmapset link." });
   }
 }
 
@@ -61,17 +61,17 @@ function validateAndExtractBeatmapId(mapLink) {
  * @returns {Promise<Object>} The beatmap information
  * @throws {Error} If the beatmap cannot be found or is not standard mode
  */
-async function getBeatmapInfo(beatmapId) {
+async function getBeatmapInfo(beatmapId, req, res) {
   const api = new nodesu.Client(process.env.API_KEY);
   const beatmaps = await api.beatmaps.getByBeatmapId(beatmapId);
 
   if (beatmaps.length === 0) {
-    throw new Error("No beatmaps found.");
+    return res.status(400).json({ error: "No beatmaps found." });
   }
 
   const beatmap = beatmaps[0];
   if (beatmap.mode !== 0) {
-    throw new Error("Only standard maps are allowed.");
+    return res.status(400).json({ error: `Only standard maps are allowed. This map is ${['osu!', 'Taiko', 'Catch the Beat', 'osu!mania'][beatmap.mode] || 'Unknown'} mode.` });
   }
 
   return beatmap;
@@ -149,8 +149,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields: map and username." });
     }
 
-    const beatmapId = validateAndExtractBeatmapId(map);
-    const beatmap = await getBeatmapInfo(beatmapId);
+    const beatmapId = validateAndExtractBeatmapId(map, req, res);
+    const beatmap = await getBeatmapInfo(beatmapId, req, res);
     const finalMessage = formatMessage(map, beatmap, mods);
     
     await sendBanchoMessage(username, finalMessage);
