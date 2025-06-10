@@ -127,7 +127,11 @@ const Authorized = ({ user, twitchSuccess }) => {
         pollForMapInfo(res.data.id);
       }
     } catch (error) {
-      toast.error("Submission failed.");
+      if (error.response && error.response.status === 429 && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Submission failed.");
+      }
     } finally {
       setSubmitting(false);
     }
