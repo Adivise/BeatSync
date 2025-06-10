@@ -22,19 +22,6 @@ export default async function handler(req, res) {
       if (!username || !map) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
-
-      // Cooldown check: find the latest request by this user
-      const lastRequest = await Map.findOne({ username }).sort({ createdAt: -1 });
-      if (lastRequest) {
-        const now = new Date();
-        const lastTime = new Date(lastRequest.createdAt);
-        const diffMs = now - lastTime;
-        if (diffMs < 60 * 1000) { // 1 minute cooldown
-          const secondsLeft = Math.ceil((60 * 1000 - diffMs) / 1000);
-          return res.status(400).json({ error: `Cooldown: Please wait ${secondsLeft} seconds before submitting again.` });
-        }
-      }
-
       return res.status(201).json({ success: true });
     } catch (err) {
       console.error('Database error:', err);

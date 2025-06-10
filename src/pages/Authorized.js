@@ -27,6 +27,7 @@ const Authorized = ({ user, twitchSuccess }) => {
   const [modDropdownVisible, setModDropdownVisible] = useState(false);
   const [modDropdownActive, setModDropdownActive] = useState(false);
   const modDropdownRef = useRef(null);
+  const [cooldown, setCooldown] = useState(false);
 
   // Define fetchRequests once at the top level
   const fetchRequests = async () => {
@@ -34,7 +35,7 @@ const Authorized = ({ user, twitchSuccess }) => {
       const res = await axios.get(`/api/requests`);
       if (res.status === 200 && res.data && Array.isArray(res.data.maps)) {
         setRequests(res.data.maps);
-        console.log('Fetched requests:', res.data.maps); // Debug log
+        // console.log('Fetched requests:', res.data.maps); // Debug log
       } else {
         console.error('Invalid response format:', res.data);
         toast.error("Invalid response format from server");
@@ -100,11 +101,18 @@ const Authorized = ({ user, twitchSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (cooldown) return toast.error("Please wait 1 minute before submitting again.");
     if (!map.trim()) return toast.error("Please enter a map link.");
     if (!user?.login) {
       return toast.error("Login required!");
     }
     setSubmitting(true);
+
+    setCooldown(true);
+    setTimeout(() => {
+      setCooldown(false);
+    }, 60000);
+
     try {
       const res = await axios.post(`/api/sender`, {
         map,
@@ -156,8 +164,8 @@ const Authorized = ({ user, twitchSuccess }) => {
           >
             {showModSelect ? "-" : "+"}
           </button>
-          <button className="fox-button" disabled={submitting} style={{ background: "#0000009c" }}>
-            {submitting ? "Send..." : "Send"}
+          <button className="fox-button" disabled={cooldown} style={{ background: "#0000009c" }}>
+            {submitting ? "Send..." : cooldown ? "Cooldown..." : "Send"}
           </button>
         </div>
         {modDropdownVisible && (
