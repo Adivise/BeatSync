@@ -40,6 +40,8 @@ export default async function handler(req, res) {
       password: process.env.OSU_PWD,
     });
 
+    console.log(fullMapLink, mapID);
+
     await client.connect();
     const api = new nodesu.Client(process.env.API_KEY);
     const beatmaps = await api.beatmaps.getByBeatmapId(mapID);
