@@ -46,27 +46,40 @@ export default async function handler(req, res) {
     }
 
     const fullMapLink = map.trim();
-    const beatmapId = map.match(matchedRegex)[2];
+    
+    let beatmapId;
+    const match = map.match(matchedRegex);
+    if (matchedRegex === regex.beatmap_official) {
+      beatmapId = match[2];
+    } else if (
+      matchedRegex === regex.beatmap_old ||
+      matchedRegex === regex.beatmap_old_alternate
+    ) {
+      beatmapId = match[2];
+    } else if (matchedRegex === regex.beatmap_alternate) {
+      beatmapId = match[1];
+    } else {
+      // For beatmapset links, you may want to reject or handle differently
+      return res.status(400).json({ error: "Please provide a direct beatmap link, not a beatmapset link." });
+    }
 
     const client = new bancho.BanchoClient({
       username: process.env.OSU_USERNAME,
       password: process.env.OSU_PWD,
     });
 
-    console.log(fullMapLink, beatmapId);
-
-    await client.connect();
     const api = new nodesu.Client(process.env.API_KEY);
     const beatmaps = await api.beatmaps.getByBeatmapId(beatmapId);
 
-    if (!beatmaps || beatmaps.length === 0) {
+    if (beatmaps.length == 0) {
       client.disconnect();
       return res.status(400).json({ error: "No beatmaps found." });
     }
 
+    await client.connect();
     const beatmap = beatmaps[0];
 
-    if (beatmap.mode !== 0) {
+    if (beatmap.mode != 0) {
       return res.status(400).json({ error: "Only standard maps are allowed." });
     }
 
