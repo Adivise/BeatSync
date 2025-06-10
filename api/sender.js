@@ -23,28 +23,41 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields: map and username." });
     }
 
-    const osuMapRegex = /https:\/\/osu\.ppy\.sh\/(beatmapsets\/\d+#osu\/\d+|b\/\d+|beatmaps\/\d+)/;
-    if (!osuMapRegex.test(map)) {
+		const regex = {
+			beatmap_official: /https?:\/\/osu.ppy.sh\/beatmapsets\/[0-9]+\#(osu|taiko|fruits|mania)\/([0-9]+)/,
+			beatmap_old: /https?:\/\/(osu|old).ppy.sh\/b\/([0-9]+)/,
+			beatmap_alternate: /https?:\/\/osu.ppy.sh\/beatmaps\/([0-9]+)/,
+			beatmap_old_alternate: /https?:\/\/(osu|old).ppy.sh\/p\/beatmap\?b=([0-9]+)/,
+			beatmapset_official: /https?:\/\/osu.ppy.sh\/beatmapsets\/([0-9]+)/,
+			beatmapset_old: /https?:\/\/(osu|old).ppy.sh\/s\/([0-9]+)/,
+			beatmapset_old_alternate: /https?:\/\/(osu|old).ppy.sh\/p\/beatmap\?s=([0-9]+)/,
+		};
+
+    let matchedRegex = null;
+    for (const [key, value] of Object.entries(regex)) {
+      if (value.test(map)) {
+        matchedRegex = key;
+        break;
+      }
+    }
+
+    if (!matchedRegex) {
       return res.status(400).json({ error: "Invalid map link. Please use a valid osu! map link." });
     }
 
-    // https://osu.ppy.sh/beatmapsets/123456#osu/654321
-    // https://osu.ppy.sh/b/4875522
-    // https://osu.ppy.sh/beatmaps/5053677
-
     const fullMapLink = map.trim();
-    const mapID = fullMapLink.split("/").pop();
+    const beatmapId = map.match(matchedRegex)[2];
 
     const client = new bancho.BanchoClient({
       username: process.env.OSU_USERNAME,
       password: process.env.OSU_PWD,
     });
 
-    console.log(fullMapLink, mapID);
+    console.log(fullMapLink, beatmapId);
 
     await client.connect();
     const api = new nodesu.Client(process.env.API_KEY);
-    const beatmaps = await api.beatmaps.getByBeatmapId(mapID);
+    const beatmaps = await api.beatmaps.getByBeatmapId(beatmapId);
 
     if (!beatmaps || beatmaps.length === 0) {
       client.disconnect();
