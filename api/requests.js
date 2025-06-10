@@ -41,6 +41,7 @@ export default async function handler(req, res) {
         map,
         createdAt: new Date(),
       });
+      
       return res.status(201).json({ success: true, id: newRequest._id });
     } catch (err) {
       console.error('Database error:', err);

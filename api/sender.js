@@ -23,6 +23,15 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields: map and username." });
     }
 
+    const osuMapRegex = /https:\/\/osu\.ppy\.sh\/(beatmapsets\/\d+#osu\/\d+|b\/\d+|beatmaps\/\d+)/;
+    if (!osuMapRegex.test(map)) {
+      return res.status(400).json({ error: "Invalid map link. Please use a valid osu! map link." });
+    }
+
+    // https://osu.ppy.sh/beatmapsets/123456#osu/654321
+    // https://osu.ppy.sh/b/4875522
+    // https://osu.ppy.sh/beatmaps/5053677
+
     const fullMapLink = map.trim();
     const mapID = fullMapLink.split("/").pop();
 
@@ -41,17 +50,17 @@ export default async function handler(req, res) {
     }
 
     const beatmap = beatmaps[0];
-    const songTitle = beatmap.title;
-    const artistName = beatmap.artist;
-    const diffName = beatmap.version;
 
-    let finalMessage = `[${fullMapLink} ${artistName} - ${songTitle} [${diffName}]]`;
+    if (beatmap.mode !== 0) {
+      return res.status(400).json({ error: "Only standard maps are allowed." });
+    }
+
+    let finalMessage = `[${fullMapLink} ${beatmap.artist} - ${beatmap.title} [${beatmap.version}]]`;
     if (mods && mods.length > 0) {
       finalMessage += ` +${mods.join(", ")}`;
     }
-
-    // Log the message for debugging
-    console.log(`@${username}: ${finalMessage}`);
+    await client.getSelf().sendMessage(finalMessage);
+    
     client.disconnect();
 
     // Upsert map info in the database

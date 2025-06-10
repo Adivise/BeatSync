@@ -101,16 +101,9 @@ const Authorized = ({ user, twitchSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!map.trim()) return toast.error("Please enter a map link.");
-
-    const osuStandardRegex = /https:\/\/osu\.ppy\.sh\/beatmapsets\/\d+#osu\/\d+/;
-    if (!osuStandardRegex.test(map)) {
-      return toast.error("Invalid map link. Only osu!standard maps with '#osu' are allowed.");
-    }
-
     if (!user?.login) {
       return toast.error("Login required!");
     }
-
     setSubmitting(true);
     try {
       const res = await axios.post(`/api/sender`, {
