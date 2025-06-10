@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login.js";
 import Authorized from "./pages/Authorized.js";
 import Nav from "./components/Nav.js";
-import "react-toastify/dist/ReactToastify.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -51,6 +51,7 @@ export default function App() {
   
   return (
     <BrowserRouter>
+      <Analytics />
       <div>
         <Nav user={user} />
         <Routes>
