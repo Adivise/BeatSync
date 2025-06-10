@@ -1,0 +1,33 @@
+.btn.twitch-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 340px;
+  margin: 2rem auto 0 auto;
+  padding: 12px 20px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #9147ff 0%, #6441a5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(145, 71, 255, 0.18), 0 1.5px 8px rgba(100, 65, 165, 0.18);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  outline: none;
+}
+
+.btn.twitch-btn:hover {
+  background: linear-gradient(90deg, #6441a5 0%, #9147ff 100%);
+  box-shadow: 0 8px 32px rgba(145, 71, 255, 0.28), 0 2px 12px rgba(100, 65, 165, 0.22);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.twitch-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #fff;
+  padding: 2px;
+}
