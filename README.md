@@ -1,6 +1,6 @@
 <div align="center">
 
-![BeatSync Banner](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=EasyWebRequest&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient)
+![BeatSync Banner](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=BeatSync&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient)
 
 [![Discord](https://discordapp.com/api/guilds/903043706410643496/widget.png?style=banner2)](https://discord.gg/SNG3dh3MbR)
 [![Support](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nanotect)
@@ -9,7 +9,7 @@
 
 ## 📋 Overview
 
-EasyWebRequest is a web-based request system for osu! beatmaps, featuring Twitch authentication and a user-friendly interface. It allows users to submit beatmap requests with mods, view request history, and manage submissions efficiently.
+BeatSync is a web-based request system for osu! beatmaps, featuring Twitch authentication and a user-friendly interface. It allows users to submit beatmap requests with mods, view request history, and manage submissions efficiently.
 
 ## 🏗️ Serverless
 
