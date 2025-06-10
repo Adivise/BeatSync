@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         const diffMs = now - lastTime;
         if (diffMs < 60 * 1000) { // 1 minute cooldown
           const secondsLeft = Math.ceil((60 * 1000 - diffMs) / 1000);
-          return res.status(429).json({ error: `Cooldown: Please wait ${secondsLeft} seconds before submitting again.` });
+          return res.status(400).json({ error: `Cooldown: Please wait ${secondsLeft} seconds before submitting again.` });
         }
       }
 
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
         map,
         createdAt: new Date(),
       });
-      
+
       return res.status(201).json({ success: true, id: newRequest._id });
     } catch (err) {
       console.error('Database error:', err);

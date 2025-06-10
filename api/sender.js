@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
     if (!beatmaps || beatmaps.length === 0) {
       client.disconnect();
-      return res.status(404).json({ error: "No beatmaps found." });
+      return res.status(400).json({ error: "No beatmaps found." });
     }
 
     const beatmap = beatmaps[0];
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
       finalMessage += ` +${mods.join(", ")}`;
     }
     await client.getSelf().sendMessage(finalMessage);
-    
+
     client.disconnect();
 
     // Upsert map info in the database
