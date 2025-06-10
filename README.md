@@ -90,10 +90,6 @@ We welcome contributions! Please feel free to submit a Pull Request.
 
 - Inspired by: [DRB - Request bot](https://btmc.live/requests/)
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## ⚠️ Important Notes
 
 - Ensure all environment variables are properly set in Vercel
