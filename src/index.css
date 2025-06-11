@@ -234,47 +234,63 @@ body, html {
 }
 
 /* Modern colorful Toastify style */
-.Toastify__toast,
-.Toastify__toast--info,
-.Toastify__toast--success,
-.Toastify__toast--error,
-.Toastify__toast--warning {
-  border-radius: 999px !important;
-  overflow: visible !important;
-  position: relative;
-  background: #23242a;
-  z-index: 0;
-  border: none !important;
+.Toastify__toast {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 12px !important;
+  padding: 16px 24px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  min-height: auto !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.Toastify__toast::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 999px;
-  z-index: -1;
-  background: linear-gradient(270deg, #00ffff, #ff66ab, #00ffff);
-  background-size: 400% 400%;
-  animation: gradientMove 30s ease infinite;
-  pointer-events: none;
-  box-shadow: 0 0 32px 8px #00ffff55, 0 0 32px 8px #ff66ab55;
-}
-
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.Toastify__toast-body {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #1a1a1a !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
 .Toastify__close-button {
-  position: absolute !important;
-  top: 50% !important;
-  right: 18px !important;
-  transform: translateY(-50%) !important;
-  z-index: 2 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  color: #666 !important;
+  opacity: 0.7 !important;
+  padding: 4px !important;
+  transition: opacity 0.2s !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+}
+
+/* Toast Variants */
+.Toastify__toast--success {
+  border-left: 4px solid #10b981 !important;
+}
+
+.Toastify__toast--error {
+  border-left: 4px solid #ef4444 !important;
+}
+
+.Toastify__toast--warning {
+  border-left: 4px solid #f59e0b !important;
+}
+
+.Toastify__toast--info {
+  border-left: 4px solid #3b82f6 !important;
+}
+
+/* Toast Container */
+.Toastify__toast-container {
+  padding: 24px !important;
+}
+
+.Toastify__toast-container--bottom-right {
+  bottom: 0 !important;
+  right: 0 !important;
 }
 
 .loading-screen {
