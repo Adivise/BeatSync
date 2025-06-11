@@ -23,9 +23,10 @@
 
 .login-buttons {
   display: flex;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .btn {
@@ -48,7 +49,7 @@
 .btn.twitch-btn,
 .btn.osu-btn {
   width: 260px;
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 .twitch-logo,
@@ -137,4 +138,42 @@
   width: 24px;
   height: 24px;
   filter: brightness(0) invert(1);
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--bg-secondary);
+  border-top: 3px solid var(--accent-secondary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-osu-logo {
+  animation: osu-bounce 1.2s infinite alternate, osu-spin 2.5s linear infinite;
+  display: block;
+}
+
+@keyframes osu-bounce {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes osu-spin {
+  0% { rotate: 0deg; }
+  100% { rotate: 360deg; }
 }
