@@ -10,7 +10,7 @@
 
 ## 📋 Overview
 
-BeatSync is a web-based request system for osu! beatmaps, featuring Twitch authentication and a user-friendly interface. It allows users to submit beatmap requests with mods, view request history, and manage submissions efficiently.
+BeatSync is a web-based request system for osu! beatmaps, featuring both Twitch and osu! authentication options. It allows users to submit beatmap requests with mods, view request history, and manage submissions efficiently.
 
 ## 🏗️ Serverless
 
@@ -19,12 +19,14 @@ This application is built using a serverless architecture, leveraging Vercel's s
 - **Frontend**: React application served through Vercel's Edge Network
 - **Backend**: Serverless API routes using Vercel Functions
 - **Database**: MongoDB Atlas for persistent storage
-- **Authentication**: Twitch OAuth integration
+- **Authentication**: Twitch and osu! OAuth integration
 - **Real-time Updates**: Polling mechanism for request status
 
 ## ✨ Features
 
-- 🔐 Twitch Authentication (Login/Logout)
+- 🔐 Multiple Authentication Options
+  - Twitch Authentication (Login/Logout)
+  - osu! Authentication (Login/Logout)
 - 🎵 Beatmap Link Submission (osu!standard only)
 - 🎮 Mod Selection Dropdown
 - 📜 Request History Display
@@ -40,6 +42,7 @@ This application is built using a serverless architecture, leveraging Vercel's s
 - [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas/register)
 - [osu! API Key](https://osu.ppy.sh/home/account/edit)
 - [Twitch OAuth Credentials](https://dev.twitch.tv/console/apps)
+- [osu! OAuth Credentials](https://osu.ppy.sh/home/account/edit#oauth)
 
 ### Quick Deploy
 
@@ -61,9 +64,13 @@ DATABASE=your_mongodb_atlas_connection_string
 # Server Configuration
 BASE_URL=your_vercel_deployment_url
 
-# Twitch Configuration
+# Twitch OAuth Configuration
 TWITCH_CLIENT=your_twitch_client_id
 TWITCH_SECRET=your_twitch_secret
+
+# osu! OAuth Configuration
+OSU_CLIENT=your_osu_client_id
+OSU_SECRET=your_osu_client_secret
 
 # osu! Configuration
 OSU_OPPONENT=your_osu_username
@@ -75,6 +82,18 @@ API_KEY=your_osu_api_key
 ## ⚙️ Configuration
 
 All backend/frontend configuration is handled through Vercel environment variables. Make sure to set them all in your Vercel project settings.
+
+### OAuth Configuration
+
+#### Twitch OAuth
+1. Go to [Twitch Developer Console](https://dev.twitch.tv/console/apps)
+2. Create a new application
+3. Set the OAuth Redirect URL to: `https://your-vercel-url/api/auth/twitch/callback`
+
+#### osu! OAuth
+1. Go to [osu! Account Settings](https://osu.ppy.sh/home/account/edit#oauth)
+2. Create a new OAuth application
+3. Set the OAuth Redirect URL to: `https://your-vercel-url/api/auth/osu/callback`
 
 ## 🤝 Contributing
 
@@ -90,13 +109,17 @@ We welcome contributions! Please feel free to submit a Pull Request.
 
 - Inspired by: [DRB - Request bot](https://btmc.live/requests/)
 
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## ⚠️ Important Notes
 
 - Ensure all environment variables are properly set in Vercel
 - Keep your API keys and credentials secure
 - Make sure to update the BASE_URL in Vercel after deployment and redeploy
 - The app requires a MongoDB Atlas database for production use
-- Update your Twitch OAuth redirect URI to match your Vercel deployment URL
+- Update your OAuth redirect URIs to match your Vercel deployment URL
 - Serverless functions have execution time limits (10s on Vercel's free tier)
 
 ## 🔗 Links

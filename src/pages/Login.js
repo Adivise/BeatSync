@@ -27,7 +27,11 @@ const Login = () => {
   }, []);
 
   const twitchLogin = () => {
-    window.open('/api/auth/twitch', '_self');
+    window.open('/api/auth/twitch/twitch', '_self');
+  };
+
+  const osuLogin = () => {
+    window.open('/api/auth/osu/osu', '_self');
   };
 
   if (loading) {
@@ -38,10 +42,16 @@ const Login = () => {
     <div className="container">
       <Header />
       <HistoryRequest requests={requests} />
-      <button className="btn twitch-btn" onClick={twitchLogin}>
-        <span>Login with Twitch</span>
-        <img src="https://img.icons8.com/fluency/48/twitch.png" alt="Twitch Logo" className="twitch-logo"/>
-      </button>
+      <div className="login-buttons">
+        <button className="btn twitch-btn" onClick={twitchLogin}>
+          <span>Login with Twitch</span>
+          <img src="https://img.icons8.com/fluency/48/twitch.png" alt="Twitch Logo" className="twitch-logo"/>
+        </button>
+        <button className="btn osu-btn" onClick={osuLogin}>
+          <span>Login with osu!</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Osu%21_Logo_2016.svg/1200px-Osu%21_Logo_2016.svg.png" alt="osu! Logo" className="osu-logo"/>
+        </button>
+      </div>
     </div>
   );
 };

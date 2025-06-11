@@ -167,7 +167,7 @@ const useModDropdownAnimation = (showModSelect) => {
 };
 
 // Main Component
-const Authorized = ({ user, twitchSuccess }) => {
+const Authorized = ({ user, authSuccess }) => {
   const [map, setMap] = useState("");
   const [selectedMods, setSelectedMods] = useState([]);
   const [showModSelect, setShowModSelect] = useState(false);
@@ -179,11 +179,11 @@ const Authorized = ({ user, twitchSuccess }) => {
   const { modDropdownVisible, modDropdownActive } = useModDropdownAnimation(showModSelect);
 
   useEffect(() => {
-    if (twitchSuccess && user?.login) {
+    if (authSuccess && user?.username) {
       setMap("");
     }
     fetchRequests();
-  }, [twitchSuccess, user]);
+  }, [authSuccess, user]);
 
   const handleMap = (e) => setMap(e.target.value);
 
@@ -213,7 +213,7 @@ const Authorized = ({ user, twitchSuccess }) => {
     e.preventDefault();
     if (cooldown) return toast.error("Please wait 1 minute before submitting again.");
     if (!map.trim()) return toast.error("Please enter a map link.");
-    if (!user?.login) return toast.error("Login required!");
+    if (!user?.username) return toast.error("Login required!");
 
     setSubmitting(true);
     setCooldown(true);
@@ -223,11 +223,11 @@ const Authorized = ({ user, twitchSuccess }) => {
       const res = await axios.post(`/api/sender`, {
         map,
         mods: selectedMods.map((mod) => mod.value),
-        username: user.login
+        username: user.username
       });
 
       if (res.status === 200 && res.data && res.data.id) {
-        toast.success(`Map submitted with ${selectedMods.map((mod) => mod.label).join(", ")} by ${user.login}`);
+        toast.success(`Map submitted with ${selectedMods.map((mod) => mod.label).join(", ")} by ${user.username}`);
         setMap("");
         setSelectedMods([]);
         await fetchRequests();

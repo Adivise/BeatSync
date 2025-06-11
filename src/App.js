@@ -8,13 +8,14 @@ import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [twitchSuccess, setTwitchSuccess] = useState(false);
+  const [authSuccess, setAuthSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await fetch(`/api/auth/login/success`, {
+        // Try Twitch auth first
+        const twitchResponse = await fetch(`/api/auth/twitch/login/success`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -24,19 +25,55 @@ export default function App() {
           },
         });
 
-        const resObject = await response.json();
+        const twitchData = await twitchResponse.json();
         
-        if (response.ok && resObject.success) {
-          setUser(resObject.user);
-          setTwitchSuccess(true);
-        } else {
-          setUser(null);
-          setTwitchSuccess(false);
+        if (twitchResponse.ok && twitchData.success) {
+          const twitchUser = {
+            username: twitchData.user.login,
+            avatar: twitchData.user.profile_image_url,
+            service: 'twitch'
+          };
+
+          setUser(twitchUser);
+          setAuthSuccess(true);
+          setLoading(false);
+          return;
         }
+
+        // If Twitch auth fails, try osu! auth
+        const osuResponse = await fetch(`/api/auth/osu/login/success`, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+
+        const osuData = await osuResponse.json();
+        
+        if (osuResponse.ok && osuData.success) {
+          const osuUser = {
+            username: osuData.user.username,
+            avatar: osuData.user.avatar_url,
+            country_code: osuData.user.country_code,
+            service: 'osu'
+          };
+
+          setUser(osuUser);
+          setAuthSuccess(true);
+          setLoading(false);
+          return;
+        }
+
+        // If both auth methods fail
+        setUser(null);
+        setAuthSuccess(false);
       } catch (error) {
         console.error("❌ Error fetching user:", error);
         setUser(null);
-        setTwitchSuccess(false);
+        setAuthSuccess(false);
       } finally {
         setLoading(false);
       }
@@ -56,7 +93,7 @@ export default function App() {
         <Nav user={user} />
         <Routes>
           {/* ✅ Redirect `/` to `/login` if user is not logged in */}
-          <Route path="/" element={user ? <Authorized user={user} success={twitchSuccess} /> : <Navigate to="/login" />} />
+          <Route path="/" element={user ? <Authorized user={user} success={authSuccess} /> : <Navigate to="/login" />} />
           <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         </Routes>
         <ToastContainer 

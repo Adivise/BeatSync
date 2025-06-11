@@ -1,3 +1,91 @@
+.login-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.login-options {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+  text-align: center;
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  min-width: 200px;
+}
+
+.twitch-btn {
+  background-color: #9146ff;
+  color: white;
+}
+
+.twitch-btn:hover {
+  background-color: #7c3ad1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(145, 70, 255, 0.3);
+}
+
+.twitch-logo {
+  width: 24px;
+  height: 24px;
+}
+
+.history-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.history-title {
+  text-align: center;
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .login-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
 .btn.twitch-btn {
   display: flex;
   align-items: center;
@@ -24,10 +112,19 @@
   transform: translateY(-2px) scale(1.03);
 }
 
-.twitch-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: #fff;
-  padding: 2px;
+.osu-btn {
+  background-color: #ff66aa;
+  color: white;
+}
+
+.osu-btn:hover {
+  background-color: #ff4d99;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 170, 0.3);
+}
+
+.osu-logo {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
 }
