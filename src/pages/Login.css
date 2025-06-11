@@ -23,7 +23,7 @@
 
 .login-buttons {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -31,15 +31,30 @@
 .btn {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   transition: all 0.2s ease;
   cursor: pointer;
   border: none;
-  min-width: 200px;
+  min-width: 180px;
+  width: 260px;
+  margin: 0.5rem 0;
+}
+
+.btn.twitch-btn,
+.btn.osu-btn {
+  width: 260px;
+  margin: 0.5rem 0;
+}
+
+.twitch-logo,
+.osu-logo {
+  width: 22px;
+  height: 22px;
 }
 
 .twitch-btn {
@@ -51,11 +66,6 @@
   background-color: #7c3ad1;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(145, 70, 255, 0.3);
-}
-
-.twitch-logo {
-  width: 24px;
-  height: 24px;
 }
 
 .history-section {

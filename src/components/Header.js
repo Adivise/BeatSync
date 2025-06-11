@@ -7,7 +7,7 @@ const Header = () => {
     <div className="header-center">
       <div className="sun-header">
         <div className="avatar-gradient-border">
-          <img src="https://img.icons8.com/nolan/64/osu--v2.png" alt="osuLOGO" />
+          <img src="https://img.icons8.com/stickers/100/osu.png" alt="osuLOGO" />
         </div>
         <span className="version">v{packageJson.version}</span>
         <span className="sun-title">BeatSync</span>

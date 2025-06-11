@@ -49,7 +49,7 @@ const Login = () => {
         </button>
         <button className="btn osu-btn" onClick={osuLogin}>
           <span>Login with osu!</span>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Osu%21_Logo_2016.svg/1200px-Osu%21_Logo_2016.svg.png" alt="osu! Logo" className="osu-logo"/>
+          <img src="https://img.icons8.com/stickers/100/osu.png" alt="osu! Logo" className="osu-logo"/>
         </button>
       </div>
     </div>
