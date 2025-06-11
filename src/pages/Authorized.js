@@ -255,7 +255,7 @@ const Authorized = ({ user, authSuccess }) => {
             className="loading-osu-logo"
             style={{width: 48, height: 48, marginTop: '0.5rem'}}
           />
-          <div style={{color: '#ff66aa', fontWeight: 700, fontSize: '1.2rem', letterSpacing: '1px', textShadow: '0 2px 8px #0008'}}>Syncing your beatmaps...</div>
+          <div className="loading-message">Syncing your beatmaps...</div>
         </div>
       </div>
     );
