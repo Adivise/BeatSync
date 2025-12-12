@@ -5,6 +5,8 @@ export default async function handler(req, res) {
   const clientId = process.env.TWITCH_CLIENT;
   const clientSecret = process.env.TWITCH_SECRET;
   const redirectUri = `${process.env.BASE_URL}/api/auth/twitch/callback`;
+  const baseUrl = process.env.BASE_URL || '';
+  const domain = baseUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   if (!code) {
     res.status(400).send('Missing code');
@@ -41,13 +43,10 @@ export default async function handler(req, res) {
   const userData = await userRes.json();
   const user = userData.data[0];
 
-  const baseUrl = process.env.BASE_URL || '';
-  const domain = baseUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
-
-  // Set a cookie with user info with proper settings
-  res.setHeader('Set-Cookie', [
-    `twitchUser=${encodeURIComponent(JSON.stringify(user))}; Path=/; HttpOnly; SameSite=Lax; Secure; Domain=${domain}`
-  ]);
+  const isProduction = process.env.BASE_URL?.startsWith("https://") && !process.env.BASE_URL.includes("localhost");
+  let cookie = `twitchUser=${encodeURIComponent(JSON.stringify(user))}; Path=/; HttpOnly; SameSite=Lax`;
+  if (isProduction) cookie += `; Secure; Domain=${domain}`;
+  res.setHeader("Set-Cookie", [cookie]);
 
   // Redirect to frontend
   res.writeHead(302, { Location: `/` });

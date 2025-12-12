@@ -2,19 +2,8 @@
    Card & Form Container Glow
    ========================= */
 .form-container {
-  background: #18181f !important;
-  border-radius: 14px;
-  padding: 1.2rem 1rem 1.5rem 1rem;
-  box-shadow: 0 4px 24px rgba(255,102,171,0.10), 0 1.5px 8px rgba(0,0,0,0.18);
-  border: 1px solid #444;
   max-width: 700px;
   margin: 2rem auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  align-items: stretch;
-  transition: box-shadow 0.2s, transform 0.2s;
-  position: relative;
 }
 
 .form-container:hover::before {
@@ -60,26 +49,9 @@
   z-index: 1;
 }
 
+/* Input field styles are now handled by React Bits Input component */
 .input-field {
-  position: relative;
-  z-index: 3;
-  flex: 2 1 0;
-  min-width: 0;
-  height: 44px;
-  font-size: 1rem;
-  border-radius: 8px !important;
-  border: 1.5px solid #0000009c !important;
-  background: #0000009c !important;
-  color: #ffffff !important;
-  padding: 0 12px;
-  box-shadow: 0 2px 8px rgba(0,255,255,0.04);
-  transition: border 0.2s, box-shadow 0.2s;
-}
-
-.input-field:focus {
-  border-color: #ff66ab !important;
-  box-shadow: 0 0 0 2px #ff66ab33 !important;
-  outline: none;
+  /* Legacy support - styles moved to React Bits Input component */
 }
 
 .select {

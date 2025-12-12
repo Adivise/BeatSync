@@ -1,9 +1,10 @@
 .nav-container {
   display: flex;
   gap: 15px;
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 100;
 }
 
 .func-box {

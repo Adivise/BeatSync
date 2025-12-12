@@ -1,0 +1,142 @@
+/* React Bits Style Button */
+.reactbits-button {
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 180px;
+  text-decoration: none;
+  outline: none;
+}
+
+.reactbits-button-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reactbits-button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.reactbits-button:hover .reactbits-button-shine {
+  left: 100%;
+}
+
+.reactbits-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Gradient Variant */
+.reactbits-button--gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reactbits-button--gradient:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.reactbits-button--gradient:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Twitch Variant */
+.reactbits-button--twitch {
+  background: linear-gradient(90deg, #9147ff 0%, #6441a5 100%);
+  color: white;
+  box-shadow: 0 4px 24px rgba(145, 71, 255, 0.18), 0 1.5px 8px rgba(100, 65, 165, 0.18);
+}
+
+.reactbits-button--twitch:hover:not(:disabled) {
+  background: linear-gradient(90deg, #6441a5 0%, #9147ff 100%);
+  box-shadow: 0 8px 32px rgba(145, 71, 255, 0.28), 0 2px 12px rgba(100, 65, 165, 0.22);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* OSU Variant */
+.reactbits-button--osu {
+  background: linear-gradient(135deg, #ff66aa 0%, #ff4d99 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 102, 170, 0.4);
+}
+
+.reactbits-button--osu:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 102, 170, 0.6);
+}
+
+/* Glow Variant */
+.reactbits-button--glow {
+  background: #0000009c;
+  color: white;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.reactbits-button--glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: glowing-border 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.reactbits-button--glow:hover::before {
+  opacity: 1;
+}
+
+@keyframes glowing-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Small Variant */
+.reactbits-button--small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-width: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reactbits-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}

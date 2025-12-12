@@ -1,0 +1,91 @@
+/* React Bits Style Input */
+.reactbits-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.reactbits-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #0000009c;
+  background: #0000009c;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+  z-index: 2;
+}
+
+.reactbits-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.reactbits-input:focus {
+  border-color: #ff66ab;
+  box-shadow: 0 0 0 2px rgba(255, 102, 171, 0.2);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.reactbits-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reactbits-input-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  padding: 1.5px;
+  background: linear-gradient(45deg, #ff66ab, #00ffff, #ff66ab);
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: gradient-border 3s ease infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.reactbits-input:focus ~ .reactbits-input-border {
+  opacity: 0.6;
+}
+
+.reactbits-input-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 102, 171, 0.3), transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.reactbits-input:focus ~ .reactbits-input-glow {
+  width: 200%;
+  height: 200%;
+}
+
+@keyframes gradient-border {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .reactbits-input {
+    width: 100%;
+  }
+}

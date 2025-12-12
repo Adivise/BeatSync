@@ -143,4 +143,3 @@ const HistoryRequest = ({ requests }) => {
 };
 
 export default HistoryRequest;
-

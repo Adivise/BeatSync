@@ -5,6 +5,8 @@ export default async function handler(req, res) {
   const clientId = process.env.OSU_CLIENT;
   const clientSecret = process.env.OSU_SECRET;
   const redirectUri = `${process.env.BASE_URL}/api/auth/osu/callback`;
+  const baseUrl = process.env.BASE_URL || '';
+  const domain = baseUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   if (!code) {
     res.status(400).send('Missing code');
@@ -54,13 +56,11 @@ export default async function handler(req, res) {
       access_token: tokenData.access_token
     };
 
-    const baseUrl = process.env.BASE_URL || '';
-    const domain = baseUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
-
-    // Set a cookie with user info with proper settings
-    res.setHeader('Set-Cookie', [
-      `osuUser=${encodeURIComponent(JSON.stringify(user))}; Path=/; HttpOnly; SameSite=Lax; Secure; Domain=${domain}`
-    ]);
+    // --- Set cookie with only Path, HttpOnly, SameSite for localhost/dev
+    let cookie = `osuUser=${encodeURIComponent(JSON.stringify(user))}; Path=/; HttpOnly; SameSite=Lax`;
+    const isProduction = process.env.BASE_URL?.startsWith("https://") && !process.env.BASE_URL.includes("localhost");
+    if (isProduction) cookie += `; Secure; Domain=${domain}`;
+    res.setHeader("Set-Cookie", [cookie]);
 
     // Redirect to frontend
     res.writeHead(302, { Location: `/` });

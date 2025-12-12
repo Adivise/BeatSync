@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import HistoryRequest from "../components/HistoryRequest.js";
-import Header from "../components/Header.js";
+import Header from "../components/reactbits/Header.js";
+import Button from "../components/reactbits/Button.js";
+import Input from "../components/reactbits/Input.js";
+import Card from "../components/reactbits/Card.js";
+import Spinner from "../components/reactbits/Spinner.js";
+import packageJson from "../../package.json";
 import "./Authorized.css";
 import Select from "react-select";
 
@@ -24,7 +29,7 @@ const POLLING_INTERVAL = 1500; // 1.5 seconds
 // Mod Selector Component
 const ModSelector = ({ selectedMods, onModChange, showModSelect, onToggleModSelect, modDropdownVisible, modDropdownActive, modDropdownRef }) => {
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
       <button
         className="fox-button"
         type="button"
@@ -71,7 +76,7 @@ const ModSelector = ({ selectedMods, onModChange, showModSelect, onToggleModSele
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
@@ -91,32 +96,79 @@ const MapSubmissionForm = ({
   modDropdownRef
 }) => {
   return (
-    <form onSubmit={onSubmit} className="form-container">
-      <div className="form-row">
-        <input
-          className="input-field"
-          onChange={onMapChange}
-          value={map}
-          type="text"
-          placeholder="Enter your osu! map link"
-        />
-        <ModSelector
-          selectedMods={selectedMods}
-          onModChange={onModChange}
-          showModSelect={showModSelect}
-          onToggleModSelect={onToggleModSelect}
-          modDropdownVisible={modDropdownVisible}
-          modDropdownActive={modDropdownActive}
-          modDropdownRef={modDropdownRef}
-        />
-        <button className="fox-button" disabled={cooldown} style={{ background: "#0000009c" }}>
-          {submitting ? "Send..." : cooldown ? "Cooldown..." : "Send"}
-        </button>
-      </div>
-      <p className="example-text">
-        Example: https://osu.ppy.sh/beatmapsets/461744#osu/1031991
-      </p>
-    </form>
+    <Card variant="dark" className="form-container">
+      <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
+        <div className="form-row">
+          <div style={{ flex: '2 1 0', minWidth: 0 }}>
+            <Input
+              value={map}
+              onChange={onMapChange}
+              type="text"
+              placeholder="Enter your osu! map link"
+            />
+          </div>
+          <button
+            className="fox-button"
+            type="button"
+            style={{ 
+              width: 30, 
+              marginRight: 0, 
+              height: 30, 
+              borderRadius: 8, 
+              background: "#0000009c", 
+              color: "#fff", 
+              border: "none", 
+              fontWeight: 700, 
+              fontSize: 18, 
+              cursor: "pointer" 
+            }}
+            onClick={onToggleModSelect}
+            aria-label="Select mods"
+          >
+            {showModSelect ? "-" : "+"}
+          </button>
+          <Button 
+            variant="glow" 
+            type="submit"
+            disabled={cooldown || submitting}
+            className="reactbits-button--small"
+            style={{ width: '130px', height: '50px' }}
+          >
+            {submitting ? "Send..." : cooldown ? "Cooldown..." : "Send"}
+          </Button>
+        </div>
+        {modDropdownVisible && (
+          <div
+            id="mods-container"
+            ref={modDropdownRef}
+            style={{
+              opacity: modDropdownActive ? 1 : 0,
+              transform: modDropdownActive ? "translateY(0)" : "translateY(-10px)",
+              pointerEvents: modDropdownActive ? "auto" : "none",
+              transition: "opacity 0.2s, transform 0.2s",
+              marginTop: '7px'
+            }}
+          >
+            <Select
+              id="mods-selection"
+              options={MOD_OPTIONS}
+              isMulti
+              value={selectedMods}
+              onChange={onModChange}
+              placeholder="No Mods Selected"
+              classNamePrefix="select"
+              closeMenuOnSelect={false}
+              menuPortalTarget={document.body}
+              menuPosition="fixed"
+              isOptionDisabled={() => selectedMods.length >= 2}
+            />
+          </div>
+        )}
+        <p className="example-text">
+          Example: https://osu.ppy.sh/beatmapsets/461744#osu/1031991
+        </p>
+      </form>
+    </Card>
   );
 };
 
@@ -248,7 +300,7 @@ const Authorized = ({ user, authSuccess }) => {
     return (
       <div className="loading-screen">
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem'}}>
-          <div className="loading-spinner" />
+          <Spinner variant="gradient" />
           <div className="loading-message">Syncing your beatmaps...</div>
         </div>
       </div>
@@ -257,7 +309,12 @@ const Authorized = ({ user, authSuccess }) => {
 
   return (
     <div>
-      <Header />
+      <Header 
+        title="BeatSync"
+        subtitle="Request your favorite osu! maps with ease"
+        icon="https://img.icons8.com/stickers/100/osu.png"
+        version={`v${packageJson.version}`}
+      />
       <HistoryRequest requests={requests} />
       <MapSubmissionForm
         map={map}

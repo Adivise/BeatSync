@@ -1,0 +1,111 @@
+/* React Bits Style Spinner */
+.reactbits-spinner {
+  position: relative;
+  display: inline-block;
+}
+
+.reactbits-spinner-ring {
+  position: absolute;
+  border: 4px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: reactbits-spin 1.1s linear infinite;
+}
+
+/* Gradient Variant */
+.reactbits-spinner--gradient {
+  width: 54px;
+  height: 54px;
+}
+
+.reactbits-spinner--gradient .reactbits-spinner-ring:nth-child(1) {
+  width: 54px;
+  height: 54px;
+  border: 4px solid rgba(255, 255, 255, 0.08);
+  border-top-color: #ff66aa;
+  border-right-color: #00ffff;
+  box-shadow: 0 0 16px 2px rgba(255, 102, 170, 0.5), 0 0 24px 4px rgba(0, 255, 255, 0.3);
+}
+
+.reactbits-spinner--gradient .reactbits-spinner-ring:nth-child(2) {
+  width: 40px;
+  height: 40px;
+  top: 7px;
+  left: 7px;
+  border: 3px solid transparent;
+  border-top-color: #00ffff;
+  border-right-color: #ff66aa;
+  animation-duration: 0.8s;
+  animation-direction: reverse;
+}
+
+.reactbits-spinner--gradient .reactbits-spinner-ring:nth-child(3) {
+  width: 26px;
+  height: 26px;
+  top: 14px;
+  left: 14px;
+  border: 2px solid transparent;
+  border-top-color: #ff66aa;
+  animation-duration: 0.6s;
+}
+
+/* Small Variant */
+.reactbits-spinner--small {
+  width: 32px;
+  height: 32px;
+}
+
+.reactbits-spinner--small .reactbits-spinner-ring:nth-child(1) {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+.reactbits-spinner--small .reactbits-spinner-ring:nth-child(2) {
+  width: 24px;
+  height: 24px;
+  top: 4px;
+  left: 4px;
+  border-width: 2px;
+}
+
+.reactbits-spinner--small .reactbits-spinner-ring:nth-child(3) {
+  width: 16px;
+  height: 16px;
+  top: 8px;
+  left: 8px;
+  border-width: 2px;
+}
+
+/* Large Variant */
+.reactbits-spinner--large {
+  width: 72px;
+  height: 72px;
+}
+
+.reactbits-spinner--large .reactbits-spinner-ring:nth-child(1) {
+  width: 72px;
+  height: 72px;
+  border-width: 5px;
+}
+
+.reactbits-spinner--large .reactbits-spinner-ring:nth-child(2) {
+  width: 56px;
+  height: 56px;
+  top: 8px;
+  left: 8px;
+  border-width: 4px;
+}
+
+.reactbits-spinner--large .reactbits-spinner-ring:nth-child(3) {
+  width: 40px;
+  height: 40px;
+  top: 16px;
+  left: 16px;
+  border-width: 3px;
+}
+
+@keyframes reactbits-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
